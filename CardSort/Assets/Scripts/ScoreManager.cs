@@ -56,19 +56,17 @@ public class ScoreManager : MonoBehaviour
             BestScore = CurrentScore;
             PlayerPrefs.SetInt("best_score", BestScore);
         }
-        // TODO: update UI via UIController
     }
 
     public void OnMismatch()
     {
         ComboCount = 0;
-        // small penalty optionally:
+        // Minus points for not matching
         CurrentScore = Mathf.Max(0, CurrentScore - baseMatchPoints / 4);
     }
 
     public void OnGameOver()
     {
-        // maybe persist or show summary
         if (CurrentScore > BestScore)
         {
             BestScore = CurrentScore;
@@ -76,7 +74,11 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    // called by GameManager during load
+    public void ClearSavedData()
+    {
+        PlayerPrefs.SetInt("best_score", 0);
+    }
+
     public void LoadState(SaveState s)
     {
         CurrentScore = s.score;
