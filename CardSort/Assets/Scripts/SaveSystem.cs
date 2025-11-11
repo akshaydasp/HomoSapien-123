@@ -28,7 +28,7 @@ public static class SaveSystem
         var sd = new GameSaveData();
         sd.cols = gm.cols;
         sd.rows = gm.rows;
-        sd.cardOrder = gm.GetCardOrder(); // we will need a small helper to expose the current card order; implement below
+        sd.cardOrder = gm.GetCardOrder(); 
         sd.matchedIndices = gm.GetMatchedIndices();
         sd.faceUpIndices = gm.GetFaceUpIndices();
 
@@ -50,7 +50,6 @@ public static class SaveSystem
         return JsonUtility.FromJson<GameSaveData>(json);
     }
 
-    // Backwards compatibility wrapper
     public static SaveState Load(string filename = "save.json")
     {
         var raw = LoadRaw(filename);

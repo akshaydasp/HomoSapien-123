@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Utility to compute card positions to fill a Rect area (centered coordinates)
 public static class GridLayoutController
 {
     // returns local positions for each cell (left-to-right, top-to-bottom), centered at 0,0

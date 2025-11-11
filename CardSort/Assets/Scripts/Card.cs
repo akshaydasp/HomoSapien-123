@@ -52,13 +52,11 @@ public class Card : MonoBehaviour, IPointerDownHandler
     public void SetMatched()
     {
         IsMatched = true;
-        // optionally, animate matched removal
         StartCoroutine(MatchPulseAndDisable());
     }
 
     IEnumerator MatchPulseAndDisable()
-    {
-        // simple scale pulse
+    {     
         float t = 0f;
         Vector3 start = transform.localScale;
         Vector3 end = start * 1.12f;
@@ -83,7 +81,7 @@ public class Card : MonoBehaviour, IPointerDownHandler
         gameObject.SetActive(false);
     }
 
-    // Flip animation coroutine
+    // Flip animation
     public IEnumerator FlipCoroutine(bool faceUp)
     {
         IsLocked = true;

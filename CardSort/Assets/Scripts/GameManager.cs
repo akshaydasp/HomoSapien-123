@@ -96,9 +96,7 @@ public class GameManager : MonoBehaviour
 
     void LayoutScaleCards()
     {
-        // compute card size to fit boardArea given rows/cols
         if (allCards.Count == 0) return;
-        // get a card rect size defaults (we'll compute scale)
         RectTransform sample = allCards[0].GetComponent<RectTransform>();
         Vector2 boardSz = boardArea.rect.size;
         float totalSpacingX = spacing * (cols + 1);
@@ -123,20 +121,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Called by Card when clicked (via OnPointerDown)
     public void OnCardSelected(Card card)
     {
         if (card.IsLocked || card.IsFaceUp || card.IsMatched) return;
 
-        // play flip SFX
+      
         AudioManager.Instance.PlayFlip();
 
-        // flip immediately
+      
         card.Flip(true, this);
 
-        // enqueue and handle pair checking
+      
         waitingQueue.Enqueue(card);
-        // if a pair exists (at least two waiting), process oldest pair
+      
         if (waitingQueue.Count >= 2)
         {
             Card a = waitingQueue.Dequeue();
@@ -151,7 +148,6 @@ public class GameManager : MonoBehaviour
         if (a == null || b == null) yield break;
         if (a.IsMatched || b.IsMatched) yield break;
 
-        // small delay to allow flip animation to complete visually
         yield return new WaitForSeconds(Mathf.Max(0.0f, Mathf.Min(flipDuration, 0.12f)));
 
         if (a.cardId == b.cardId)
@@ -170,8 +166,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // mismatch: play sound and flip back after mismatchDelay
-            AudioManager.Instance.PlayMismatch();
-            // lock both until flipback begins
+            AudioManager.Instance.PlayMismatch();         
             a.IsLocked = true;
             b.IsLocked = true;
             yield return new WaitForSeconds(mismatchDelay);
@@ -278,17 +273,15 @@ public class GameManager : MonoBehaviour
         _lastLayout = pick;
     }
 
-    // Ensures we always pick an even cell count, and try not to repeat the last layout
     Vector2Int PickRandomLayoutDifferent()
     {
         if (allowedLayouts == null || allowedLayouts.Length == 0)
-        {
-            // Fallback: keep current cols/rows if none configured
+        {      
             return new Vector2Int(cols, rows);
         }
 
-        // Filter to even-cell layouts
-        var valid = new System.Collections.Generic.List<Vector2Int>();
+       
+        var valid = new List<Vector2Int>();
         foreach (var l in allowedLayouts)
         {
             if (((l.x * l.y) % 2) == 0)
@@ -296,11 +289,9 @@ public class GameManager : MonoBehaviour
         }
         if (valid.Count == 0) valid.Add(new Vector2Int(cols, rows));
 
-        // Choose random, avoiding immediate repeat if possible
         Vector2Int chosen = valid[_layoutRng.Next(valid.Count)];
         if (valid.Count > 1 && chosen == _lastLayout)
         {
-            // pick another
             chosen = valid[_layoutRng.Next(valid.Count)];
         }
         return chosen;

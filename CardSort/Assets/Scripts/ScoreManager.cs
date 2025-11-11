@@ -61,7 +61,6 @@ public class ScoreManager : MonoBehaviour
     public void OnMismatch()
     {
         ComboCount = 0;
-        // Minus points for not matching
         CurrentScore = Mathf.Max(0, CurrentScore - baseMatchPoints / 4);
     }
 
