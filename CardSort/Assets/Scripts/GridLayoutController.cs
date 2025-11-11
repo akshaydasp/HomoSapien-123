@@ -8,13 +8,13 @@ public static class GridLayoutController
     public static List<Vector2> GenerateGridPositions(Vector2 areaSize, int cols, int rows, float spacing)
     {
         List<Vector2> list = new List<Vector2>();
-        // compute cell size (we don't know card size yet, positions are relative centers)
+      
         float totalSpacingX = spacing * (cols + 1);
         float totalSpacingY = spacing * (rows + 1);
         float cellW = (areaSize.x - totalSpacingX) / cols;
         float cellH = (areaSize.y - totalSpacingY) / rows;
 
-        // compute origin (top-left)
+       
         float startX = -areaSize.x / 2f + spacing + cellW / 2f;
         float startY = areaSize.y / 2f - spacing - cellH / 2f;
 

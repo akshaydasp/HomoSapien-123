@@ -31,11 +31,11 @@ public static class SaveSystem
         sd.cardOrder = gm.GetCardOrder(); // we will need a small helper to expose the current card order; implement below
         sd.matchedIndices = gm.GetMatchedIndices();
         sd.faceUpIndices = gm.GetFaceUpIndices();
-        // optional: include score if ScoreManager present
+
         sd.score = gm.scoreManager ? gm.scoreManager.CurrentScore : 0;
         sd.highScore = gm.scoreManager ? gm.scoreManager.BestScore : 0;
         sd.combo = gm.scoreManager ? gm.scoreManager.ComboCount : 0;
-        sd.lastComboTime = 0; // optional, not critical
+        sd.lastComboTime = 0; 
 
         string json = JsonUtility.ToJson(sd, true);
         File.WriteAllText(PathFor(filename), json);

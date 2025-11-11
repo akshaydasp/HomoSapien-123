@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(CanvasGroup))]
 public class Card : MonoBehaviour, IPointerDownHandler
 {
-    public int cardId; // pair identifier
+    public int cardId; 
     public Image frontImage;
     public Image backImage;
     public float flipDuration = 0.25f;
     public bool IsMatched;
     public bool IsFaceUp;
-    public bool IsLocked;  // temporarily locked while animating
+    public bool IsLocked;  
 
     GameManager gm;
     CanvasGroup canvasGroup;
@@ -69,10 +69,9 @@ public class Card : MonoBehaviour, IPointerDownHandler
             yield return null;
         }
         yield return new WaitForSeconds(0.12f);
-        // hide or disable
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
-        // optional: fade out
+
         float fadeDur = 0.2f;
         float f = 0f;
         while (f < fadeDur)
@@ -90,7 +89,6 @@ public class Card : MonoBehaviour, IPointerDownHandler
         IsLocked = true;
         float half = flipDuration / 2f;
         float t = 0f;
-        // rotate y 0 -> 90
         while (t < half)
         {
             t += Time.deltaTime;
@@ -99,11 +97,9 @@ public class Card : MonoBehaviour, IPointerDownHandler
             transform.localEulerAngles = new Vector3(0, angle, 0);
             yield return null;
         }
-        // swap images at mid-rotation
         frontImage.gameObject.SetActive(faceUp);
         backImage.gameObject.SetActive(!faceUp);
 
-        // rotate 90 -> 0
         t = 0f;
         while (t < half)
         {
@@ -118,7 +114,6 @@ public class Card : MonoBehaviour, IPointerDownHandler
         yield break;
     }
 
-    // Public helper wrapper
     public void Flip(bool show, MonoBehaviour owner)
     {
         owner.StartCoroutine(FlipCoroutine(show));

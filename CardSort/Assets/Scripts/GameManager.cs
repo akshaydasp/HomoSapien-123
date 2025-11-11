@@ -8,11 +8,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
     [Header("Prefabs & assets")]
     public Card cardPrefab;
     public RectTransform boardArea; 
     public Sprite cardBackSprite;
     public List<Sprite> cardFaceSprites; 
+
     [Header("Game settings")]
     public int cols = 4;
     public int rows = 3;
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
     public float flipDuration = 0.25f;
     public float mismatchDelay = 0.8f;
     public bool shuffle = true;
+
     [Header("Layouts")]
     public Vector2Int[] allowedLayouts = new Vector2Int[]
 {
@@ -202,8 +205,7 @@ public class GameManager : MonoBehaviour
         // restore board using state
         cols = state.cols;
         rows = state.rows;
-        // reconstruct board deterministically from state.seed
-        // simple approach: set shuffle=false and use state.cardOrder
+       
         ClearBoard();
         var positions = GridLayoutController.GenerateGridPositions(boardArea.rect.size, cols, rows, spacing);
         var ids = state.cardOrder;
